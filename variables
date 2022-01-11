@@ -1,10 +1,10 @@
 #! vim ft=bash
 # Complete the following list of attributes
-PROJECT_NAME="kindle_update"
-VENDOR_ID="1949"
-PRODUCT_ID="0004"
-LOCAL_DIR="/home/pi/Documents/ebooks/" # Has to end with slash
-REMOTE_DIR="documents/ebooks" # No trailing slash, relative to mount
+PROJECT_NAME="sandisk_automatic_sync"
+VENDOR_ID="0781"
+PRODUCT_ID="75a0"
+LOCAL_DIR="/home/pi/music/" # Has to end with slash
+REMOTE_DIR="Music" # No trailing slash, relative to mount
 
 
 # Do not modify these

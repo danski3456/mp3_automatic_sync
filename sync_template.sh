@@ -3,15 +3,28 @@
 [[ ! -d "$LOCAL_DIR" ]] && sudo mkdir "$LOCAL_DIR" && sudo chown -R "$USER:$USER" "$LOCAL_DIR" 2>"$LOG_FILE"
 [[ ! -d "$MOUNT_FILE" ]] && sudo mkdir "$MOUNT_FILE" && sudo chown -R "$USER:$USER" "$MOUNT_FILE" 2>"$LOG_FILE"
 
+createPlaylists()
+{
+
+  find "$LOCAL_DIR" -mindepth 1 -type d |
+  while read subdir 
+  do
+          dir=$(basename -- "$subdir")
+          pushd "$subdir"
+          find . -type f -name "*.mp3" -printf "%f\r\n" | sudo tee "${ABSOLUTE_REMOTE_DIR}/${dir}/${dir}.m3u" 
+          popd
+  done
+}
 
 doSynchronization()
 {
   sudo mount "$NODE_FILE" "$MOUNT_FILE" >> "$LOG_FILE" 2>&1
   rsync -rtDvz --ignore-existing $LOCAL_DIR $ABSOLUTE_REMOTE_DIR >> "$LOG_FILE" 2>&1
+  createPlaylists >> "$LOG_FILE" 2>&1
   sudo umount "$MOUNT_FILE"
 }
 
-echo "Starting Kindle Updater" >> "$LOG_FILE"
+echo "Starting Sandisk Clip Plus Player" >> "$LOG_FILE"
 
 trap "rm -f $PIPE_FILE" EXIT
 
